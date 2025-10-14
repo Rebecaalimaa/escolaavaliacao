@@ -1,28 +1,16 @@
+// ...existing code...
 let turmaAtual = null;
 let atividadeParaExcluir = null;
 
-document.addEventListener('DOMContentLoaded', function() {
-    verificarAutenticacao();
-    carregarTurmaAtual();
-    carregarAtividades();
-    configurarEventos();
-});
-
-function carregarTurmaAtual() {
-    const turmaId = localStorage.getItem('turmaAtualId');
-    if (!turmaId) {
-        alert('Nenhuma turma selecionada!');
-        window.location.href = 'principal.html';
-        return;
-    }
-
-    const turmas = JSON.parse(localStorage.getItem('turmas') || '[]');
-    turmaAtual = turmas.find(t => t.id === turmaId);
-    
-    if (turmaAtual) {
-        document.getElementById('turmaInfo').textContent = `${turmaAtual.nome} - Turma ${turmaAtual.numero}`;
-    }
+// Carrega turmaAtual do localStorage
+const turmaId = localStorage.getItem('turmaAtualId');
+if (turmaId) {
+    turmaAtual = { id: turmaId };
+} else {
+    // Se não houver turma selecionada, redireciona para a página principal
+    window.location.href = 'principal.html';
 }
+// ...existing code...
 
 // Carrega as atividades da turma
 function carregarAtividades() {
@@ -36,7 +24,7 @@ function carregarAtividades() {
 
     setTimeout(() => {
         const atividades = JSON.parse(localStorage.getItem(`atividades_${turmaAtual.id}`) || '[]');
-        
+
         loading.style.display = 'none';
 
         if (atividades.length === 0) {
@@ -44,6 +32,7 @@ function carregarAtividades() {
         } else {
             listaAtividades.style.display = 'grid';
             renderizarAtividades(atividades);
+            if (!turmaAtual) return;
         }
     }, 500);
 }
@@ -63,12 +52,12 @@ function renderizarAtividades(atividades) {
 function criarCardAtividade(atividade) {
     const card = document.createElement('div');
     card.className = 'atividade-card';
-    
+
     const dataFormatada = formatarData(atividade.dataEntrega);
     const hoje = new Date();
     const dataEntrega = new Date(atividade.dataEntrega);
     const atrasada = dataEntrega < hoje;
-    
+
     card.innerHTML = `
         <h3>${atividade.titulo}</h3>
         <div class="atividade-descricao">${atividade.descricao}</div>
@@ -83,7 +72,7 @@ function criarCardAtividade(atividade) {
             <button class="btn btn-small btn-delete" onclick="abrirModalExcluir('${atividade.id}')">Excluir</button>
         </div>
     `;
-    
+
     return card;
 }
 
@@ -145,7 +134,7 @@ function abrirModalEditar(atividadeId) {
         document.getElementById('editDescricaoAtividade').value = atividade.descricao;
         document.getElementById('editDataEntrega').value = atividade.dataEntrega;
         document.getElementById('editPontuacaoMaxima').value = atividade.pontuacaoMaxima;
-        
+
         document.getElementById('modalEditarAtividade').style.display = 'block';
     }
 }
@@ -196,9 +185,9 @@ function confirmarExclusao() {
     if (atividadeParaExcluir) {
         const atividades = JSON.parse(localStorage.getItem(`atividades_${turmaAtual.id}`) || '[]');
         const novasAtividades = atividades.filter(a => a.id !== atividadeParaExcluir);
-        
+
         localStorage.setItem(`atividades_${turmaAtual.id}`, JSON.stringify(novasAtividades));
-        
+
         fecharModalExcluir();
         carregarAtividades();
     }
@@ -218,11 +207,11 @@ function logout() {
 }
 
 // Fecha modais ao clicar fora deles
-window.onclick = function(event) {
+window.onclick = function (event) {
     const modalNovaAtividade = document.getElementById('modalNovaAtividade');
     const modalEditarAtividade = document.getElementById('modalEditarAtividade');
     const modalExcluir = document.getElementById('modalExcluir');
-    
+
     if (event.target === modalNovaAtividade) {
         fecharModalNovaAtividade();
     }
