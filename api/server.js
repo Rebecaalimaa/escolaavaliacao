@@ -82,7 +82,6 @@ app.post('/turmas', async (req, res) => {
   }
 
   try {
-    // garantir que 'numero' seja um inteiro
     const turma = await prisma.turma.create({
       data: {
         nome,
@@ -194,7 +193,7 @@ app.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout efetuado com sucesso.' });
 });
 
-// Iniciar o servidor
+// inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

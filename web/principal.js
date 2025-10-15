@@ -119,7 +119,7 @@ async function confirmarExclusao() {
 }
 
 function verAtividades(turmaId) {
-    localStorage.setItem('turmaAtualId', turmaId); // <-- Adicione esta linha
+    localStorage.setItem('turmaAtualId', turmaId); 
     window.location.href = `atividades.html`;
 }
 function logout() {

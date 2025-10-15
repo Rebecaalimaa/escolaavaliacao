@@ -1,4 +1,3 @@
-// ...existing code...
 let turmaAtual = null;
 let atividadeParaExcluir = null;
 
@@ -28,7 +27,6 @@ async function carregarAtividades() {
     }
 }
 
-// Renderiza as atividades na tela
 function renderizarAtividades(atividades) {
     const listaAtividades = document.getElementById('listaAtividades');
     listaAtividades.innerHTML = '';
@@ -39,7 +37,6 @@ function renderizarAtividades(atividades) {
     });
 }
 
-// Cria um card de atividade
 function criarCardAtividade(atividade) {
     const card = document.createElement('div');
     card.className = 'atividade-card';
@@ -77,18 +74,15 @@ function formatarData(dataString) {
     return `${dia}/${mes}/${ano}`;
 }
 
-// Configura os eventos dos formulários
 function configurarEventos() {
     document.getElementById('formNovaAtividade').addEventListener('submit', cadastrarAtividade);
     document.getElementById('formEditarAtividade').addEventListener('submit', salvarEdicaoAtividade);
 }
 
-// Abre o modal de nova atividade
 function abrirModalNovaAtividade() {
     document.getElementById('modalNovaAtividade').style.display = 'block';
 }
 
-// Fecha o modal de nova atividade
 function fecharModalNovaAtividade() {
     document.getElementById('modalNovaAtividade').style.display = 'none';
     document.getElementById('formNovaAtividade').reset();
@@ -122,14 +116,13 @@ function abrirModalEditar(atividadeId) {
         document.getElementById('editAtividadeId').value = atividade.id;
         document.getElementById('editTituloAtividade').value = atividade.nome;
         document.getElementById('editDescricaoAtividade').value = atividade.descricao;
-        document.getElementById('editDataEntrega').value = atividade.data.slice(0, 10); // yyyy-mm-dd
+        document.getElementById('editDataEntrega').value = atividade.data.slice(0, 10); 
         document.getElementById('editPontuacaoMaxima').value = atividade.pontuacaoMaxima;
 
         document.getElementById('modalEditarAtividade').style.display = 'block';
     }
 }
 
-// Fecha o modal de edição
 function fecharModalEditarAtividade() {
     document.getElementById('modalEditarAtividade').style.display = 'none';
     document.getElementById('formEditarAtividade').reset();
@@ -157,19 +150,16 @@ async function salvarEdicaoAtividade(e) {
     carregarAtividades();
 }
 
-// Abre o modal de exclusão
 function abrirModalExcluir(atividadeId) {
     atividadeParaExcluir = atividadeId;
     document.getElementById('modalExcluir').style.display = 'block';
 }
 
-// Fecha o modal de exclusão
 function fecharModalExcluir() {
     atividadeParaExcluir = null;
     document.getElementById('modalExcluir').style.display = 'none';
 }
 
-// Confirma a exclusão da atividade
 function confirmarExclusao() {
     if (atividadeParaExcluir) {
         const atividades = JSON.parse(localStorage.getItem(`atividades_${turmaAtual.id}`) || '[]');
@@ -182,20 +172,18 @@ function confirmarExclusao() {
     }
 }
 
-// Volta para a página principal
 function voltarParaPrincipal() {
     localStorage.removeItem('turmaAtualId');
     window.location.href = 'principal.html';
 }
 
-// Faz logout
+
 function logout() {
     localStorage.removeItem('usuarioLogado');
     localStorage.removeItem('turmaAtualId');
     window.location.href = 'login.html';
 }
 
-// Fecha modais ao clicar fora deles
 window.onclick = function (event) {
     const modalNovaAtividade = document.getElementById('modalNovaAtividade');
     const modalEditarAtividade = document.getElementById('modalEditarAtividade');

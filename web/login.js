@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000"; // sua API Node.js
+const API_BASE_URL = "http://localhost:3000"; 
 
 async function login() {
   const email = document.getElementById("email").value.trim();
@@ -19,7 +19,7 @@ async function login() {
     const data = await response.json();
 
     if (response.ok) {
-      // Login bem-sucedido → salva sessão e vai pra tela do professor
+  
       localStorage.setItem("professorLogado", JSON.stringify(data.professor));
       window.location.href = "principal.html";
     } else {
