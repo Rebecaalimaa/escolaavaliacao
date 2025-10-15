@@ -98,5 +98,13 @@ O sistema possui arquivos de frontend (`login.html`, `principal.html`, `atividad
 *   **Diagrama de Casos de Uso (UML):**
     ![UML](./docs/UML-psof-aula06.png)
 
-
 ### Prints 
+
+* **Tela de Login**
+![](./docs/tela-login.png)
+* **Tela Principal**
+![](./docs/tela-principal.png)
+* **Tela de Atividades**
+![](./docs/tela-atividades.png)
+* **Botão de Excluir**
+![](./docs/excluir.png)
