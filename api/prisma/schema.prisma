@@ -40,6 +40,7 @@ model Atividade {
   nome      String
   descricao String
   data      DateTime
+  pontuacaoMaxima Int
   turma     Turma     @relation(fields: [turmaId], references: [id])
   turmaId   Int
 }

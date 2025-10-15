@@ -134,7 +134,7 @@ app.delete('/turmas/:id', async (req, res) => {
 
 
 app.post('/atividades', async (req, res) => {
-  const { nome, descricao, data, turmaId } = req.body;
+  const { nome, descricao, data, pontuacaoMaxima, turmaId } = req.body;
 
   try {
     const atividade = await prisma.atividade.create({
@@ -142,6 +142,7 @@ app.post('/atividades', async (req, res) => {
         nome,
         descricao,
         data: new Date(data),
+        pontuacaoMaxima,
         turma: {
           connect: { id: turmaId },
         },
@@ -150,7 +151,7 @@ app.post('/atividades', async (req, res) => {
 
     res.status(201).json(atividade);
   } catch (error) {
-    res.status(500).json({ message: 'Erro ao cadastrar atividade.' });
+    res.status(500).json({ message: 'Erro ao cadastrar atividade.', error });
   }
 });
 
@@ -169,6 +170,25 @@ app.get('/turmas/:id/atividades', async (req, res) => {
   }
 });
 
+app.put('/atividades/:id', async (req, res) => {
+  const { id } = req.params;
+  const { nome, descricao, data, pontuacaoMaxima } = req.body;
+
+  try {
+    const atividade = await prisma.atividade.update({
+      where: { id: Number(id) },
+      data: {
+        nome,
+        descricao,
+        data: new Date(data),
+        pontuacaoMaxima,
+      },
+    });
+    res.status(200).json(atividade);
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao atualizar atividade.', error });
+  }
+});
 
 app.post('/logout', (req, res) => {
   res.status(200).json({ message: 'Logout efetuado com sucesso.' });

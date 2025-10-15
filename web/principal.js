@@ -119,9 +119,9 @@ async function confirmarExclusao() {
 }
 
 function verAtividades(turmaId) {
-    window.location.href = `atividades.html?turma=${turmaId}`;
+    localStorage.setItem('turmaAtualId', turmaId); // <-- Adicione esta linha
+    window.location.href = `atividades.html`;
 }
-
 function logout() {
     localStorage.removeItem("professorLogado");
     window.location.href = "login.html";
